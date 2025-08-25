@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../core/widgets/glassmorphic_card.dart';
-import '../../../core/widgets/animated_gradient_background.dart';
-import '../../home/presentation/home_screen.dart';
-import '../../product/presentation/product_detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -41,37 +36,37 @@ class _SearchScreenState extends State<SearchScreen>
     'Designer handbag',
   ];
 
-  final List<MarketplaceItem> _searchResults = [
-    MarketplaceItem(
-      id: '5',
-      title: 'Nike Air Jordan',
-      price: 189.99,
-      image: 'assets/images/shoes.jpg',
-      category: 'Fashion',
-      rating: 4.7,
-      isNew: false,
-      isTrending: true,
-    ),
-    MarketplaceItem(
-      id: '6',
-      title: 'Canon EOS R5',
-      price: 3899.99,
-      image: 'assets/images/camera2.jpg',
-      category: 'Photography',
-      rating: 4.9,
-      isNew: true,
-      isTrending: false,
-    ),
-    MarketplaceItem(
-      id: '7',
-      title: 'MacBook Pro M3',
-      price: 1999.99,
-      image: 'assets/images/laptop.jpg',
-      category: 'Electronics',
-      rating: 4.8,
-      isNew: true,
-      isTrending: true,
-    ),
+  final List<Map<String, dynamic>> _searchResults = [
+    {
+      'id': '5',
+      'title': 'Nike Air Jordan',
+      'price': 189.99,
+      'image': 'assets/images/shoes.jpg',
+      'category': 'Fashion',
+      'rating': 4.7,
+      'isNew': false,
+      'isTrending': true,
+    },
+    {
+      'id': '6',
+      'title': 'Canon EOS R5',
+      'price': 3899.99,
+      'image': 'assets/images/camera2.jpg',
+      'category': 'Photography',
+      'rating': 4.9,
+      'isNew': true,
+      'isTrending': false,
+    },
+    {
+      'id': '7',
+      'title': 'MacBook Pro M3',
+      'price': 1999.99,
+      'image': 'assets/images/laptop.jpg',
+      'category': 'Electronics',
+      'rating': 4.8,
+      'isNew': true,
+      'isTrending': true,
+    },
   ];
 
   @override
@@ -118,28 +113,32 @@ class _SearchScreenState extends State<SearchScreen>
     final theme = Theme.of(context);
     
     return Scaffold(
-      body: Stack(
-        children: [
-          // Animated background
-          const AnimatedGradientBackground(),
-          
-          // Main content
-          SafeArea(
-            child: Column(
-              children: [
-                // Search Header with Animation
-                _buildSearchHeader(context, theme),
-                
-                // Search Content
-                Expanded(
-                  child: _isSearching 
-                      ? _buildSearchResults(context, theme)
-                      : _buildSearchSuggestions(context, theme),
-                ),
-              ],
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              theme.colorScheme.primary.withOpacity(0.1),
+              theme.colorScheme.secondary.withOpacity(0.1),
+            ],
           ),
-        ],
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Search Header with Animation
+              _buildSearchHeader(context, theme),
+              
+              // Search Content
+              Expanded(
+                child: _isSearching 
+                    ? _buildSearchResults(context, theme)
+                    : _buildSearchSuggestions(context, theme),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -150,26 +149,27 @@ class _SearchScreenState extends State<SearchScreen>
       child: Row(
         children: [
           // Back button
-          GlassmorphicCard(
-            padding: const EdgeInsets.all(12),
-            child: GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                color: theme.colorScheme.onSurface,
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).pop(),
+                child: Icon(
+                  Icons.arrow_back_ios_new,
+                  color: theme.colorScheme.onSurface,
+                ),
               ),
             ),
           )
               .animate()
               .fadeIn()
-              .scale(delay: 100.ms),
+              .slideX(delay: 100.ms),
           
           const SizedBox(width: 16),
           
           // Search Bar
           Expanded(
-            child: GlassmorphicCard(
-              padding: EdgeInsets.zero,
+            child: Card(
               child: TextField(
                 controller: _textController,
                 focusNode: _searchFocusNode,
@@ -213,16 +213,18 @@ class _SearchScreenState extends State<SearchScreen>
           // Filter button
           if (_isSearching) ...[
             const SizedBox(width: 16),
-            GlassmorphicCard(
-              padding: const EdgeInsets.all(12),
-              child: Icon(
-                Icons.filter_list_rounded,
-                color: theme.colorScheme.primary,
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Icon(
+                  Icons.filter_list_rounded,
+                  color: theme.colorScheme.primary,
+                ),
               ),
             )
                 .animate()
                 .fadeIn()
-                .scale(delay: 300.ms),
+                .slideX(delay: 300.ms),
           ],
         ],
       ),
@@ -253,7 +255,7 @@ class _SearchScreenState extends State<SearchScreen>
             
             ...List.generate(_recentSearches.length, (index) {
               final search = _recentSearches[index];
-              return GlassmorphicCard(
+              return Card(
                 margin: const EdgeInsets.only(bottom: 8),
                 child: ListTile(
                   leading: Icon(
@@ -436,10 +438,12 @@ class _SearchScreenState extends State<SearchScreen>
         _textController.text = title;
         _searchFocusNode.unfocus();
       },
-      child: GlassmorphicCard(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -466,9 +470,9 @@ class _SearchScreenState extends State<SearchScreen>
     )
         .animate()
         .fadeIn(delay: delay.ms)
-        .scale(
-          begin: 0.8,
-          end: 1.0,
+        .slideY(
+          begin: 0.2,
+          end: 0.0,
           curve: Curves.easeOutBack,
         );
   }
@@ -480,8 +484,8 @@ class _SearchScreenState extends State<SearchScreen>
     
     // Filter results based on search query (mock implementation)
     final filteredResults = _searchResults.where((item) {
-      return item.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-             item.category.toLowerCase().contains(_searchQuery.toLowerCase());
+      return item['title'].toLowerCase().contains(_searchQuery.toLowerCase()) ||
+             item['category'].toLowerCase().contains(_searchQuery.toLowerCase());
     }).toList();
     
     return Column(
@@ -531,70 +535,93 @@ class _SearchScreenState extends State<SearchScreen>
         
         // Results grid
         Expanded(
-          child: StaggeredGridView.countBuilder(
+          child: GridView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            crossAxisCount: 2,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              childAspectRatio: 0.8,
+            ),
             itemCount: filteredResults.length,
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 16,
             itemBuilder: (context, index) {
               final item = filteredResults[index];
               return _buildSearchResultCard(item, index);
             },
-            staggeredTileBuilder: (index) => StaggeredTile.count(
-              1,
-              index.isEven ? 1.3 : 1.1,
-            ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildSearchResultCard(MarketplaceItem item, int index) {
+  Widget _buildSearchResultCard(Map<String, dynamic> item, int index) {
     final theme = Theme.of(context);
     
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                ProductDetailScreen(
-                  productId: item.id,
-                  heroTag: 'search_product_${item.id}',
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Image placeholder
+          Expanded(
+            flex: 3,
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    theme.colorScheme.primary.withOpacity(0.3),
+                    theme.colorScheme.secondary.withOpacity(0.3),
+                  ],
                 ),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              const begin = Offset(1.0, 0.0);
-              const end = Offset.zero;
-              const curve = Curves.easeInOutCubic;
-              
-              var tween = Tween(begin: begin, end: end).chain(
-                CurveTween(curve: curve),
-              );
-              
-              return SlideTransition(
-                position: animation.drive(tween),
-                child: FadeTransition(
-                  opacity: animation,
-                  child: child,
-                ),
-              );
-            },
-            transitionDuration: const Duration(milliseconds: 500),
+              ),
+              child: Icon(
+                Icons.image,
+                size: 40,
+                color: theme.colorScheme.onSurface.withOpacity(0.5),
+              ),
+            ),
           ),
-        );
-      },
-      child: Hero(
-        tag: 'search_product_${item.id}',
-        child: ProductGlassCard(
-          imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500',
-          title: item.title,
-          subtitle: item.category,
-          price: '\$${item.price}',
-          isFavorite: false,
-          onTap: () {},
-          onFavoriteToggle: () {},
-        ),
+          // Content
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item['title'],
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    item['category'],
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '\$${item['price']}',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     )
         .animate()
