@@ -358,8 +358,8 @@ class _SearchScreenState extends State<SearchScreen>
                   .animate()
                   .fadeIn(delay: (700 + index * 100).ms)
                   .scale(
-                    begin: 0.8,
-                    end: 1.0,
+                    begin: const Offset(0.8, 0.8),
+                    end: const Offset(1.0, 1.0),
                     curve: Curves.easeOutBack,
                   );
             }),
@@ -473,8 +473,8 @@ class _SearchScreenState extends State<SearchScreen>
         .animate()
         .fadeIn(delay: delay.ms)
         .scale(
-          begin: 0.8,
-          end: 1.0,
+          begin: const Offset(0.8, 0.8),
+          end: const Offset(1.0, 1.0),
           curve: Curves.easeOutBack,
         );
   }

@@ -169,10 +169,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: GlassContainer(
-                    blur: 10,
-                    shadowStrength: 8,
-                    borderRadius: BorderRadius.circular(24),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surface.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: theme.colorScheme.shadow.withOpacity(0.1),
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Row(
@@ -412,8 +420,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           .then()
           .animate(onPlay: (controller) => controller.repeat(reverse: true))
           .scale(
-            begin: 1.0,
-            end: 1.05,
+            begin: const Offset(1.0, 1.0),
+            end: const Offset(1.05, 1.05),
             duration: 2.seconds,
           ),
     );
@@ -429,10 +437,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Container(
       width: 150,
       margin: const EdgeInsets.only(right: 12),
-      child: GlassContainer(
-        blur: 10,
-        shadowStrength: 5,
-        borderRadius: BorderRadius.circular(20),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface.withOpacity(0.9),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+              blurRadius: 10,
+              spreadRadius: 2,
+            ),
+          ],
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -511,10 +527,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       },
       child: Hero(
         tag: 'product_${item.id}',
-        child: GlassContainer(
-          blur: 8,
-          shadowStrength: 5,
-          borderRadius: BorderRadius.circular(24),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface.withOpacity(0.9),
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                blurRadius: 8,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -652,8 +676,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         .animate()
         .fadeIn(delay: (100 * index).ms)
         .scale(
-          begin: 0.8,
-          end: 1.0,
+          begin: const Offset(0.8, 0.8),
+          end: const Offset(1.0, 1.0),
           duration: 400.ms,
           curve: Curves.easeOutBack,
         );
