@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../core/widgets/glassmorphic_card.dart';
 import '../../../core/widgets/animated_gradient_background.dart';
 import '../../product/presentation/product_detail_screen.dart';
 import '../../search/presentation/search_screen.dart';
@@ -329,17 +326,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               // Featured Items Grid with Staggered Animation
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                sliver: SliverStaggeredGrid.countBuilder(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  itemCount: _featuredItems.length,
-                  itemBuilder: (context, index) {
-                    return _buildProductCard(_featuredItems[index], index);
-                  },
-                  staggeredTileBuilder: (index) => StaggeredTile.count(
-                    1,
-                    index.isEven ? 1.4 : 1.2,
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 0.75,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return _buildProductCard(_featuredItems[index], index);
+                    },
+                    childCount: _featuredItems.length,
                   ),
                 ),
               ),

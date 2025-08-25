@@ -13,13 +13,11 @@ dependencies:
   # Core UI & Theming
   flutter_animate: ^4.5.0        # Declarative animations
   google_fonts: ^6.1.0           # Beautiful typography
-  dynamic_color: ^1.6.8          # Material You colors
   
   # Visual Effects & Animations
   rive: ^0.12.4                  # Complex vector animations
   lottie: ^3.0.0                 # After Effects animations
   shimmer: ^3.0.0                # Loading shimmer effects
-  glassmorphism_ui: ^0.3.0      # Glass morphism effects
   blurrycontainer: ^2.0.0       # Blur effects
   gradient_borders: ^1.0.0       # Gradient borders
   
@@ -29,7 +27,6 @@ dependencies:
   
   # Navigation & Layout
   auto_route: ^7.8.4             # Advanced routing
-  flutter_staggered_grid_view: ^0.7.0  # Pinterest-style grids
   card_swiper: ^3.0.1            # Tinder-style card swiping
   
   # State Management

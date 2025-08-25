@@ -3,9 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dynamic_color/dynamic_color.dart';
 import 'core/theme/app_theme.dart';
-import 'features/splash/presentation/splash_screen.dart';
+// Removed splash_screen.dart import - splash screen is implemented inline
 import 'features/home/presentation/home_screen.dart';
 
 void main() async {
@@ -39,17 +38,13 @@ class TradingPostApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return DynamicColorBuilder(
-      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-        return MaterialApp(
-          title: 'Trading Post',
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme(lightDynamic),
-          darkTheme: AppTheme.darkTheme(darkDynamic),
-          themeMode: ThemeMode.system,
-          home: const AnimatedSplashScreen(),
-        );
-      },
+    return MaterialApp(
+      title: 'Trading Post',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme(null),
+      darkTheme: AppTheme.darkTheme(null),
+      themeMode: ThemeMode.system,
+      home: const AnimatedSplashScreen(),
     );
   }
 }
