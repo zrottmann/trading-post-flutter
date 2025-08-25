@@ -13,7 +13,7 @@ class AppTheme {
   
   // Material 3 Light Theme with beautiful customizations
   static ThemeData lightTheme(ColorScheme? dynamicColorScheme) {
-    final ColorScheme colorScheme = dynamicColorScheme?.harmonized() ??
+    final ColorScheme colorScheme = dynamicColorScheme ??
         ColorScheme.fromSeed(
           seedColor: primaryBrandColor,
           brightness: Brightness.light,
@@ -222,7 +222,7 @@ class AppTheme {
   
   // Material 3 Dark Theme with beautiful customizations
   static ThemeData darkTheme(ColorScheme? dynamicColorScheme) {
-    final ColorScheme colorScheme = dynamicColorScheme?.harmonized() ??
+    final ColorScheme colorScheme = dynamicColorScheme ??
         ColorScheme.fromSeed(
           seedColor: primaryBrandColor,
           brightness: Brightness.dark,
@@ -362,9 +362,3 @@ class AppTheme {
   }
 }
 
-// Extension for color harmonization
-extension ColorSchemeHarmonization on ColorScheme {
-  ColorScheme harmonized() {
-    return this;
-  }
-}

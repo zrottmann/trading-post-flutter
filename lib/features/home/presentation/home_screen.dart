@@ -317,28 +317,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     required String label,
     required Color color,
   }) {
-    return GlassmorphicContainer(
+    return Container(
       width: double.infinity,
       height: 100,
-      borderRadius: 16,
-      blur: 10,
-      alignment: Alignment.center,
-      border: 1,
-      linearGradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          color.withOpacity(0.1),
-          color.withOpacity(0.05),
-        ],
-      ),
-      borderGradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          color.withOpacity(0.2),
-          color.withOpacity(0.1),
-        ],
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            color.withOpacity(0.1),
+            color.withOpacity(0.05),
+          ],
+        ),
+        border: Border.all(
+          color: color.withOpacity(0.2),
+          width: 1,
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -371,7 +366,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetailScreen(item: item),
+            builder: (context) => ProductDetailScreen(
+              productId: item.id,
+              heroTag: 'product_${item.id}_$index',
+            ),
           ),
         );
       },
@@ -540,28 +538,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ],
           ),
         ),
-        child: GlassmorphicContainer(
+        child: Container(
           width: double.infinity,
           height: 70,
-          borderRadius: 0,
-          blur: 20,
           alignment: Alignment.center,
-          border: 0,
-          linearGradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Theme.of(context).colorScheme.surface.withOpacity(0.8),
-              Theme.of(context).colorScheme.surface.withOpacity(0.7),
-            ],
-          ),
-          borderGradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Theme.of(context).colorScheme.primary.withOpacity(0.1),
-              Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-            ],
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Theme.of(context).colorScheme.surface.withOpacity(0.8),
+                Theme.of(context).colorScheme.surface.withOpacity(0.7),
+              ],
+            ),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              width: 1,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

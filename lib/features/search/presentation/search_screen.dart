@@ -356,9 +356,9 @@ class _SearchScreenState extends State<SearchScreen>
               )
                   .animate()
                   .fadeIn(delay: (700 + index * 100).ms)
-                  .scale(
-                    begin: 0.8,
-                    end: 1.0,
+                  .slideY(
+                    begin: 0.2,
+                    end: 0.0,
                     curve: Curves.easeOutBack,
                   );
             }),
