@@ -362,3 +362,4 @@ class AppTheme {
   }
 }
 
+// Simplified theme without harmonization to avoid dynamic_color compatibility issues

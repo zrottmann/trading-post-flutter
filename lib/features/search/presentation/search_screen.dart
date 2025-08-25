@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+// Removed flutter_staggered_grid_view for compatibility
 import 'package:google_fonts/google_fonts.dart';
+// Removed glassmorphic_card for compatibility
+import '../../../core/widgets/animated_gradient_background.dart';
+import '../../home/presentation/home_screen.dart';
+import '../../product/presentation/product_detail_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -36,37 +41,37 @@ class _SearchScreenState extends State<SearchScreen>
     'Designer handbag',
   ];
 
-  final List<Map<String, dynamic>> _searchResults = [
-    {
-      'id': '5',
-      'title': 'Nike Air Jordan',
-      'price': 189.99,
-      'image': 'assets/images/shoes.jpg',
-      'category': 'Fashion',
-      'rating': 4.7,
-      'isNew': false,
-      'isTrending': true,
-    },
-    {
-      'id': '6',
-      'title': 'Canon EOS R5',
-      'price': 3899.99,
-      'image': 'assets/images/camera2.jpg',
-      'category': 'Photography',
-      'rating': 4.9,
-      'isNew': true,
-      'isTrending': false,
-    },
-    {
-      'id': '7',
-      'title': 'MacBook Pro M3',
-      'price': 1999.99,
-      'image': 'assets/images/laptop.jpg',
-      'category': 'Electronics',
-      'rating': 4.8,
-      'isNew': true,
-      'isTrending': true,
-    },
+  final List<MarketplaceItem> _searchResults = [
+    MarketplaceItem(
+      id: '5',
+      title: 'Nike Air Jordan',
+      price: 189.99,
+      image: 'assets/images/shoes.jpg',
+      category: 'Fashion',
+      rating: 4.7,
+      isNew: false,
+      isTrending: true,
+    ),
+    MarketplaceItem(
+      id: '6',
+      title: 'Canon EOS R5',
+      price: 3899.99,
+      image: 'assets/images/camera2.jpg',
+      category: 'Photography',
+      rating: 4.9,
+      isNew: true,
+      isTrending: false,
+    ),
+    MarketplaceItem(
+      id: '7',
+      title: 'MacBook Pro M3',
+      price: 1999.99,
+      image: 'assets/images/laptop.jpg',
+      category: 'Electronics',
+      rating: 4.8,
+      isNew: true,
+      isTrending: true,
+    ),
   ];
 
   @override
@@ -113,32 +118,28 @@ class _SearchScreenState extends State<SearchScreen>
     final theme = Theme.of(context);
     
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              theme.colorScheme.primary.withOpacity(0.1),
-              theme.colorScheme.secondary.withOpacity(0.1),
-            ],
+      body: Stack(
+        children: [
+          // Animated background
+          const AnimatedGradientBackground(),
+          
+          // Main content
+          SafeArea(
+            child: Column(
+              children: [
+                // Search Header with Animation
+                _buildSearchHeader(context, theme),
+                
+                // Search Content
+                Expanded(
+                  child: _isSearching 
+                      ? _buildSearchResults(context, theme)
+                      : _buildSearchSuggestions(context, theme),
+                ),
+              ],
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // Search Header with Animation
-              _buildSearchHeader(context, theme),
-              
-              // Search Content
-              Expanded(
-                child: _isSearching 
-                    ? _buildSearchResults(context, theme)
-                    : _buildSearchSuggestions(context, theme),
-              ),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }
@@ -163,7 +164,7 @@ class _SearchScreenState extends State<SearchScreen>
           )
               .animate()
               .fadeIn()
-              .slideX(delay: 100.ms),
+              .scale(delay: 100.ms),
           
           const SizedBox(width: 16),
           
@@ -224,7 +225,7 @@ class _SearchScreenState extends State<SearchScreen>
             )
                 .animate()
                 .fadeIn()
-                .slideX(delay: 300.ms),
+                .scale(delay: 300.ms),
           ],
         ],
       ),
@@ -356,9 +357,9 @@ class _SearchScreenState extends State<SearchScreen>
               )
                   .animate()
                   .fadeIn(delay: (700 + index * 100).ms)
-                  .slideY(
-                    begin: 0.2,
-                    end: 0.0,
+                  .scale(
+                    begin: 0.8,
+                    end: 1.0,
                     curve: Curves.easeOutBack,
                   );
             }),
@@ -444,35 +445,36 @@ class _SearchScreenState extends State<SearchScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Icon(
-                  icon,
-                  size: 32,
-                  color: color,
-                ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(20),
               ),
-              const SizedBox(height: 12),
-              Text(
-                title,
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.onSurface,
-                ),
+              child: Icon(
+                icon,
+                size: 32,
+                color: color,
               ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
             ],
+          ),
         ),
       ),
     )
         .animate()
         .fadeIn(delay: delay.ms)
-        .slideY(
-          begin: 0.2,
-          end: 0.0,
+        .scale(
+          begin: 0.8,
+          end: 1.0,
           curve: Curves.easeOutBack,
         );
   }
@@ -484,8 +486,8 @@ class _SearchScreenState extends State<SearchScreen>
     
     // Filter results based on search query (mock implementation)
     final filteredResults = _searchResults.where((item) {
-      return item['title'].toLowerCase().contains(_searchQuery.toLowerCase()) ||
-             item['category'].toLowerCase().contains(_searchQuery.toLowerCase());
+      return item.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+             item.category.toLowerCase().contains(_searchQuery.toLowerCase());
     }).toList();
     
     return Column(
@@ -554,74 +556,50 @@ class _SearchScreenState extends State<SearchScreen>
     );
   }
 
-  Widget _buildSearchResultCard(Map<String, dynamic> item, int index) {
+  Widget _buildSearchResultCard(MarketplaceItem item, int index) {
     final theme = Theme.of(context);
     
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image placeholder
-          Expanded(
-            flex: 3,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    theme.colorScheme.primary.withOpacity(0.3),
-                    theme.colorScheme.secondary.withOpacity(0.3),
-                  ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                ProductDetailScreen(
+                  productId: item.id,
+                  heroTag: 'search_product_${item.id}',
                 ),
-              ),
-              child: Icon(
-                Icons.image,
-                size: 40,
-                color: theme.colorScheme.onSurface.withOpacity(0.5),
-              ),
-            ),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              const begin = Offset(1.0, 0.0);
+              const end = Offset.zero;
+              const curve = Curves.easeInOutCubic;
+              
+              var tween = Tween(begin: begin, end: end).chain(
+                CurveTween(curve: curve),
+              );
+              
+              return SlideTransition(
+                position: animation.drive(tween),
+                child: FadeTransition(
+                  opacity: animation,
+                  child: child,
+                ),
+              );
+            },
+            transitionDuration: const Duration(milliseconds: 500),
           ),
-          // Content
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item['title'],
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: theme.colorScheme.onSurface,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    item['category'],
-                    style: GoogleFonts.poppins(
-                      fontSize: 12,
-                      color: theme.colorScheme.onSurface.withOpacity(0.6),
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '\$${item['price']}',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: theme.colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+        );
+      },
+      child: Hero(
+        tag: 'search_product_${item.id}',
+        child: ProductGlassCard(
+          imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500',
+          title: item.title,
+          subtitle: item.category,
+          price: '\$${item.price}',
+          isFavorite: false,
+          onTap: () {},
+          onFavoriteToggle: () {},
+        ),
       ),
     )
         .animate()
