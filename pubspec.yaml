@@ -13,7 +13,7 @@ dependencies:
   # Core UI & Theming
   flutter_animate: ^4.5.0        # Declarative animations
   google_fonts: ^6.1.0           # Beautiful typography
-  dynamic_color: ^1.7.0          # Material You colors
+  dynamic_color: ^1.6.8          # Material You colors
   
   # Visual Effects & Animations
   rive: ^0.12.4                  # Complex vector animations

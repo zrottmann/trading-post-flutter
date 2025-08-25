@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:glassmorphism_ui/glassmorphism_ui.dart';
-import '../../../core/widgets/glassmorphic_card.dart';
+// Removed glassmorphism_ui for compatibility
+// Removed glassmorphic_card for compatibility
 import '../../../core/widgets/animated_gradient_background.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -252,19 +252,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
           Positioned(
             top: kToolbarHeight + 20,
             right: 20,
-            child: GlassmorphicCard(
-              padding: const EdgeInsets.all(12),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _isFavorite = !_isFavorite;
-                  });
-                },
-                child: Icon(
-                  _isFavorite ? Icons.favorite : Icons.favorite_border,
-                  color: _isFavorite
-                      ? Colors.red
-                      : theme.colorScheme.onSurface,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isFavorite = !_isFavorite;
+                    });
+                  },
+                  child: Icon(
+                    _isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: _isFavorite
+                        ? Colors.red
+                        : theme.colorScheme.onSurface,
+                  ),
                 ),
               ),
             )
@@ -286,10 +288,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Product title and rating
-          GlassmorphicCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -349,18 +353,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
                 ),
               ],
             ),
-          )
-              .animate()
-              .fadeIn(delay: 200.ms)
-              .slideY(begin: 0.3, end: 0),
+          ),
+        )
+            .animate()
+            .fadeIn(delay: 200.ms)
+            .slideY(begin: 0.3, end: 0),
           
           const SizedBox(height: 24),
           
           // Size selector
-          GlassmorphicCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 Text(
                   'Size',
                   style: theme.textTheme.titleMedium?.copyWith(
@@ -377,18 +384,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
                 ),
               ],
             ),
-          )
-              .animate()
-              .fadeIn(delay: 400.ms)
-              .slideY(begin: 0.3, end: 0),
+          ),
+        )
+            .animate()
+            .fadeIn(delay: 400.ms)
+            .slideY(begin: 0.3, end: 0),
           
           const SizedBox(height: 24),
           
           // Product description
-          GlassmorphicCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 Text(
                   'Description',
                   style: theme.textTheme.titleMedium?.copyWith(
@@ -406,10 +416,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
                 ),
               ],
             ),
-          )
-              .animate()
-              .fadeIn(delay: 600.ms)
-              .slideY(begin: 0.3, end: 0),
+          ),
+        )
+            .animate()
+            .fadeIn(delay: 600.ms)
+            .slideY(begin: 0.3, end: 0),
           
           const SizedBox(height: 100), // Space for FAB
         ],
@@ -458,12 +469,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => GlassContainer(
+      builder: (context) => Container(
         height: MediaQuery.of(context).size.height * 0.4,
         width: double.infinity,
-        blur: 20,
-        color: theme.colorScheme.surface.withOpacity(0.95),
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface.withOpacity(0.95),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+          boxShadow: [
+            BoxShadow(
+              color: theme.colorScheme.shadow.withOpacity(0.1),
+              blurRadius: 20,
+              spreadRadius: 5,
+            ),
+          ],
+        ),
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(

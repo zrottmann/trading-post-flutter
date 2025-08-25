@@ -445,26 +445,26 @@ class _SearchScreenState extends State<SearchScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(20),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Icon(
+                  icon,
+                  size: 32,
+                  color: color,
+                ),
               ),
-              child: Icon(
-                icon,
-                size: 32,
-                color: color,
+              const SizedBox(height: 12),
+              Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
+                  color: theme.colorScheme.onSurface,
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w600,
-                color: theme.colorScheme.onSurface,
-              ),
-            ),
             ],
           ),
         ),
@@ -591,14 +591,66 @@ class _SearchScreenState extends State<SearchScreen>
       },
       child: Hero(
         tag: 'search_product_${item.id}',
-        child: ProductGlassCard(
-          imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500',
-          title: item.title,
-          subtitle: item.category,
-          price: '\$${item.price}',
-          isFavorite: false,
-          onTap: () {},
-          onFavoriteToggle: () {},
+        child: Card(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                    image: DecorationImage(
+                      image: NetworkImage('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      item.category,
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '\$${item.price}',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        Icon(
+                          Icons.favorite_border,
+                          size: 18,
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     )
